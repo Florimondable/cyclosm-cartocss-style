@@ -1516,26 +1516,50 @@ come in as well.
 
   /* Maxspeed bike friendliness only applies to a limited set of highways */
   [type != 'trunk_link'][type != 'motorway_link'][type != 'motorway'][type != 'trunk'][type != 'path'][type != 'cycleway'][type != 'track'][type != 'railway'][cyclestreet != 'yes'] {
-      /* low maxspeed roads are bike friendly */
-      [maxspeed_kmh < 33] {
-          line-color: @speed32-fill;
-          [tunnel=1] {
-            line-color: lighten(@speed32-fill, 10%);
-          }
-      }
-      [maxspeed_kmh < 21] {
-          line-color: @speed20-fill;
-          [tunnel=1] {
-            line-color: lighten(@speed20-fill, 10%);
-          }
-      }
-      [maxspeed_kmh < 10],
-      [motor_vehicle='no'][can_bicycle!='no'] {
-          line-color: @speedWalk-fill;
-          [tunnel=1] {
-            line-color: lighten(@speedWalk-fill, 10%);
-          }
-      }
+    /* low maxspeed roads are bike friendly */
+    [maxspeed_kmh < 33] {
+        line-color: @speed32-fill;
+        [tunnel=1] {
+          line-color: lighten(@speed32-fill, 10%);
+        }
+    }
+    [maxspeed_kmh < 21] {
+        line-color: @speed20-fill;
+        [tunnel=1] {
+          line-color: lighten(@speed20-fill, 10%);
+        }
+    }
+    [maxspeed_kmh < 10],
+    [motor_vehicle='no'][can_bicycle!='no'] {
+        line-color: @speedWalk-fill;
+        [tunnel=1] {
+          line-color: lighten(@speedWalk-fill, 10%);
+        }
+    }
+
+
+    [traffic_hourly >= 0] {
+      line-color: @speedWalk-fill;
+    }
+    [traffic_hourly > 25] {
+      line-color: @speed20-fill;
+    }
+    [traffic_hourly > 50] {
+      line-color: @speed32-fill;
+    }
+    [traffic_hourly > 80] {
+      line-color: @standard-fill;
+    }
+    [traffic_hourly > 160] {
+      line-color: @tertiary-fill;
+    }
+    [traffic_hourly > 200] {
+      line-color: @secondary-fill;
+    }
+    [traffic_hourly > 400] {
+      line-color: @primary-fill;
+    }
+
     [can_bicycle='no'],
     [can_bicycle='private'] {
       line-color: @standard-nobicycle;
@@ -1544,7 +1568,6 @@ come in as well.
       }
     }
   }
-
 
   /* cycle streets / bicycle roads are bike friendly */
   [cyclestreet='yes'] {

@@ -466,6 +466,10 @@ Layer:
             ELSE NULL
           END AS maxspeed_kmh,
           CASE
+            WHEN tags->'traffic:hourly'~E'^\\d+$' THEN (tags->'traffic:hourly')::integer
+            ELSE NULL
+          END AS traffic_hourly,
+          CASE
             WHEN (
               tags->'psv' != 'no' OR tags->'motorcar' != 'no' OR tags->'bus' != 'no'
               OR tags->'motor_vehicle' != 'no'
@@ -612,6 +616,10 @@ Layer:
             WHEN tags->'maxspeed'='walk' THEN 5
             ELSE NULL
           END AS maxspeed_kmh,
+          CASE
+            WHEN tags->'traffic:hourly'~E'^\\d+$' THEN (tags->'traffic:hourly')::integer
+            ELSE NULL
+          END AS traffic_hourly,
           CASE
             WHEN (
               tags->'psv' != 'no' OR tags->'motorcar' != 'no' OR tags->'bus' != 'no'
@@ -827,6 +835,10 @@ Layer:
             WHEN tags->'maxspeed'='walk' THEN 5
             ELSE NULL
           END AS maxspeed_kmh,
+          CASE
+            WHEN tags->'traffic:hourly'~E'^\\d+$' THEN (tags->'traffic:hourly')::integer
+            ELSE NULL
+          END AS traffic_hourly,
           CASE
             WHEN (
               tags->'psv' != 'no' OR tags->'motorcar' != 'no' OR tags->'bus' != 'no'
