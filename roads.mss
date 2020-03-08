@@ -1540,24 +1540,39 @@ come in as well.
 
     [traffic_hourly >= 0] {
       line-color: @speedWalk-fill;
+      [tunnel=1] {
+        line-color: lighten(@speedWalk-fill, 10%);
+      }
     }
     [traffic_hourly > 25] {
       line-color: @speed20-fill;
+      [tunnel=1] {
+        line-color: lighten(@speed20-fill, 10%);
+      }
     }
     [traffic_hourly > 50] {
       line-color: @speed32-fill;
+      [tunnel=1] {
+        line-color: lighten(@speed32-fill, 10%);
+      }
     }
     [traffic_hourly > 80] {
       line-color: @standard-fill;
-    }
-    [traffic_hourly > 160] {
-      line-color: @tertiary-fill;
+      [tunnel=1] {
+        line-color: lighten(@standard-fill, 10%);
+      }
     }
     [traffic_hourly > 200] {
       line-color: @secondary-fill;
+      [tunnel=1] {
+        line-color: lighten(@secondary-fill, 5%);
+      }
     }
-    [traffic_hourly > 400] {
+    [traffic_hourly > 500] {
       line-color: @primary-fill;
+      [tunnel=1] {
+        line-color: lighten(@primary-fill, 5%);
+      }
     }
 
     [can_bicycle='no'],
