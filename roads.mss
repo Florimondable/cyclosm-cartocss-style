@@ -1544,19 +1544,19 @@ come in as well.
         line-color: lighten(@speedWalk-fill, 10%);
       }
     }
-    [traffic_hourly > 25] {
+    [traffic_hourly > 40] {
       line-color: @speed20-fill;
       [tunnel=1] {
         line-color: lighten(@speed20-fill, 10%);
       }
     }
-    [traffic_hourly > 50] {
+    [traffic_hourly > 100] {
       line-color: @speed32-fill;
       [tunnel=1] {
         line-color: lighten(@speed32-fill, 10%);
       }
     }
-    [traffic_hourly > 80] {
+    [traffic_hourly > 140] {
       line-color: @standard-fill;
       [tunnel=1] {
         line-color: lighten(@standard-fill, 10%);
