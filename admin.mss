@@ -224,28 +224,29 @@ overlapping borders correctly.
   }
 }
 
-#protected-areas::area[zoom <= 11] {
+#protected-areas::area[zoom <= 11][way_pixels > 750] {
   polygon-fill: darken(@wooded,25%);
 
   opacity: 0.15;
   comp-op: darken; /* In case of two area overlapping this avoid to have a darker area. */
 }
 
-#protected-areas::outline[zoom >= 7] {
-  background/line-color: lighten(@wooded,15%);
+#protected-areas::outline[zoom >= 7][way_pixels > 750] {
+  background/line-color: darken(@wooded,8%);
   line-color: darken(@wooded,30%);
-  line-dasharray: 6,6;
+  line-dasharray: 12,6;
 
   [zoom=7] { line-width: 1.2;     background/line-width: 2.4;  }
-  [zoom=8] { line-width: 1.4;     background/line-width: 2.8;  }
-  [zoom=9] { line-width: 1.5;     background/line-width: 3.0;  }
-  [zoom=10] { line-width: 1.6;    background/line-width: 3.2;  background/line-offset: -0.8;}
-  [zoom=11] { line-width: 1.8;    background/line-width: 3.6;  background/line-offset: -0.9;}
-  [zoom>=12] { line-width: 2.0;   background/line-width: 4.0;  background/line-offset: -1;}
-  [zoom>=14] { line-width: 3.0;   background/line-width: 6.0;  background/line-offset: -1.5;}
+  [zoom=8] { line-width: 1.3;     background/line-width: 2.8;  }
+  [zoom=9] { line-width: 1.4;     background/line-width: 3.0;  }
+  [zoom=10] { line-width: 1.5;    background/line-width: 3.2;  background/line-offset: -0.75;}
+  [zoom=11] { line-width: 1.6;    background/line-width: 3.6;  background/line-offset: -0.8;}
+  [zoom>=12] { line-width: 1.8;   background/line-width: 4.0;  background/line-offset: -0.9;}
+  [zoom>=13] { line-width: 2;   background/line-width: 4.0;  background/line-offset: -1;}
+  [zoom>=14] { line-width: 2.5;   background/line-width: 6.0;  background/line-offset: -1.5;}
 
-  opacity: 0.7;
-  comp-op: darken; /* Fusion with admin bordes. */
+  opacity: 0.6;
+  comp-op: darken; /* Fusion with admin borders. */
 }
 
 #protected-areas-text[zoom >= 13][way_pixels > 192000] {
