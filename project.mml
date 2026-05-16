@@ -349,6 +349,7 @@ Layer:
       ) AS data
   geometry: polygon
   properties:
+    buffer-size: 32
     cache-features: true
     minzoom: 2
     maxzoom: 9
@@ -378,6 +379,7 @@ Layer:
       ) AS data
   geometry: polygon
   properties:
+    buffer-size: 32
     cache-features: true
     minzoom: 10
     maxzoom: 12
@@ -406,6 +408,7 @@ Layer:
       ) AS data
   geometry: polygon
   properties:
+    buffer-size: 32
     minzoom: 13
 - id: buildings
   <<: *extents
@@ -428,6 +431,7 @@ Layer:
       ) AS data
   geometry: polygon
   properties:
+    buffer-size: 32
     cache-features: true
     minzoom: 16
 - id: piers-poly
@@ -685,6 +689,7 @@ Layer:
           AND way && !bbox!
       ) AS data
   properties:
+    buffer-size: 128
     minzoom: 12
 - id: bridge
   <<: *extents
@@ -1067,7 +1072,6 @@ Layer:
           (tags->'rcn_ref') IS NOT NULL OR
           (tags->'lcn_ref') IS NOT NULL
         ) AND way && !bbox!
-        ORDER BY z_order NULLS LAST
       ) AS data
   geometry: point
   properties:
@@ -1620,7 +1624,6 @@ Layer:
         FROM planet_osm_point
         WHERE barrier IN ('block', 'bollard', 'cattle_grid', 'chain', 'cycle_barrier', 'gate', 'jersey_barrier', 'kissing_gate', 'lift_gate', 'log', 'motorcycle_barrier', 'planter', 'stile', 'swing_gate', 'turnstile')
           AND way && !bbox!
-        ORDER BY z_order NULLS LAST
       ) AS data
   geometry: point
   properties:
