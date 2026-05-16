@@ -518,6 +518,7 @@ Layer:
       ) AS data
   geometry: point
   properties:
+    buffer-size: 64
     minzoom: 14
 - id: leisure_track
   <<: *extents
@@ -656,6 +657,7 @@ Layer:
       ) AS data
   geometry: point
   properties:
+    buffer-size: 64
     minzoom: 14
 - id: aerialways
   geometry: linestring
@@ -1055,6 +1057,7 @@ Layer:
       ) AS data
   geometry: point
   properties:
+    buffer-size: 64
     minzoom: 13
 - id: country-names
   class: country
@@ -1456,6 +1459,7 @@ Layer:
       ) AS data
   geometry: polygon
   properties:
+    cache-features: true
     minzoom: 10
 - id: amenities-points
   <<: *extents
@@ -1606,6 +1610,7 @@ Layer:
       ) AS data
   geometry: point
   properties:
+    buffer-size: 64
     minzoom: 17
 - id: amenities-poly-text
   <<: *extents
@@ -1675,6 +1680,7 @@ Layer:
         END
       ) AS power_towers
   properties:
+    buffer-size: 64
     minzoom: 14
 - id: highway_area_label
   <<: *extents
