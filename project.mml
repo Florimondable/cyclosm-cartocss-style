@@ -1646,6 +1646,7 @@ Layer:
           information,
           NULL AS way_pixels
         FROM cyclosm_amenities_point
+        WHERE way && !bbox!
       ) AS data
   geometry: point
   properties:
@@ -1715,6 +1716,7 @@ Layer:
             FROM planet_osm_roads
             WHERE highway IN ('motorway', 'trunk', 'primary', 'secondary')
               AND ref IS NOT NULL
+              AND way && !bbox!
           ) AS p
         ) AS q
         WHERE height <= 4 AND width <= 11
@@ -1772,6 +1774,7 @@ Layer:
             FROM planet_osm_line
             WHERE (highway IN ('motorway', 'trunk', 'primary', 'secondary', 'tertiary', 'unclassified', 'residential', 'track') OR aeroway IN ('runway', 'taxiway'))
               AND ref IS NOT NULL
+              AND way && !bbox!
         ) AS p
       ) AS q
       WHERE height <= 4 AND width <= 11
@@ -1841,6 +1844,7 @@ Layer:
           OR oneway IN ('yes', '-1')
           OR oneway_bicycle IN ('yes', '-1')
         )
+        AND l.way && !bbox!
         ORDER BY
           z_order DESC, -- put important roads first
           CASE WHEN layer~E'^\\d+$' THEN layer::integer ELSE 0 END, -- put top layered roads first
