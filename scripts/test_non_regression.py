@@ -3,10 +3,12 @@
 Non-regression test for the CyclOSM CartoCSS style.
 
 Compares metrics extracted from a compiled Mapnik XML file against a committed
-baseline. Fails (exit 1) if any metric has changed unexpectedly.
+baseline. Uses directional comparisons for performance metrics:
 
-The build is deterministic: same project.mml → same mapnik.xml → same metrics.
-Any unintended change to a .mss file or project.mml will be caught here.
+  - total_rules, rules_per_zoom : FAIL if value INCREASES (more rules = more
+    render work). A decrease is an improvement: warns but does not fail.
+  - layer_count : exact match in both directions (adding or removing a layer
+    is always a functional change).
 
 Usage:
     # Run regression check (baseline must exist):
@@ -75,31 +77,62 @@ def save_baseline(metrics, path):
 
 
 def check_regression(current, baseline):
-    diffs = []
+    """
+    Returns (regressions, improvements) as lists of human-readable strings.
 
-    for key in ('total_rules', 'layer_count'):
-        cur_val = current[key]
-        base_val = baseline.get(key)
-        if base_val is None:
-            diffs.append(f"  {key} : manquant dans la baseline (actuel : {cur_val})")
-        elif cur_val != base_val:
-            delta = cur_val - base_val
-            sign = '+' if delta > 0 else ''
-            diffs.append(f"  {key} : attendu {base_val}, obtenu {cur_val} ({sign}{delta})")
+    Regressions cause exit 1; improvements are warnings that suggest --update.
+    """
+    regressions = []
+    improvements = []
 
+    # layer_count: exact match (functional change in both directions)
+    cur_layers = current['layer_count']
+    base_layers = baseline.get('layer_count')
+    if base_layers is None:
+        regressions.append(f"  layer_count : absent de la baseline (actuel : {cur_layers})")
+    elif cur_layers != base_layers:
+        delta = cur_layers - base_layers
+        sign = '+' if delta > 0 else ''
+        regressions.append(
+            f"  layer_count : attendu {base_layers}, obtenu {cur_layers} ({sign}{delta})"
+        )
+
+    # total_rules: directional — fail only if increases
+    cur_total = current['total_rules']
+    base_total = baseline.get('total_rules')
+    if base_total is None:
+        regressions.append(f"  total_rules : absent de la baseline (actuel : {cur_total})")
+    elif cur_total > base_total:
+        delta = cur_total - base_total
+        regressions.append(
+            f"  total_rules : attendu ≤ {base_total}, obtenu {cur_total} (+{delta})"
+        )
+    elif cur_total < base_total:
+        delta = base_total - cur_total
+        improvements.append(
+            f"  total_rules : était {base_total}, maintenant {cur_total} (-{delta})"
+        )
+
+    # rules_per_zoom: directional per zoom level
     base_zoom = baseline.get('rules_per_zoom', {})
     for z in range(21):
         key = str(z)
         cur_val = current['rules_per_zoom'][key]
         base_val = base_zoom.get(key)
         if base_val is None:
-            diffs.append(f"  zoom {z:2d} : absent de la baseline (actuel : {cur_val})")
-        elif cur_val != base_val:
+            regressions.append(f"  zoom {z:2d} : absent de la baseline (actuel : {cur_val})")
+        elif cur_val > base_val:
             delta = cur_val - base_val
-            sign = '+' if delta > 0 else ''
-            diffs.append(f"  zoom {z:2d} : attendu {base_val} règles, obtenu {cur_val} ({sign}{delta})")
+            regressions.append(
+                f"  zoom {z:2d} : attendu ≤ {base_val} règles, obtenu {cur_val} (+{delta})"
+            )
+        elif cur_val < base_val:
+            delta = base_val - cur_val
+            improvements.append(
+                f"  zoom {z:2d} : était {base_val} règles, maintenant {cur_val} (-{delta})"
+            )
 
-    return diffs
+    return regressions, improvements
 
 
 def main():
@@ -118,10 +151,11 @@ def main():
 
     print(f"Analyse de {args.mapnik_xml} ...")
     current = compute_metrics(args.mapnik_xml)
+    peak_zoom = max(current['rules_per_zoom'], key=lambda z: current['rules_per_zoom'][z])
     print(f"  total_rules  : {current['total_rules']}")
     print(f"  layer_count  : {current['layer_count']}")
-    print(f"  pic de complexité : zoom {max(current['rules_per_zoom'], key=lambda z: current['rules_per_zoom'][z])} "
-          f"({max(current['rules_per_zoom'].values())} règles actives)")
+    print(f"  pic de complexité : zoom {peak_zoom} "
+          f"({current['rules_per_zoom'][peak_zoom]} règles actives)")
 
     if args.update:
         save_baseline(current, args.baseline)
@@ -136,18 +170,30 @@ def main():
         sys.exit(0)
 
     baseline = load_baseline(args.baseline)
-    diffs = check_regression(current, baseline)
+    regressions, improvements = check_regression(current, baseline)
 
-    if not diffs:
-        print("\nAucune régression détectée.")
+    if improvements and not regressions:
+        print("\nAMÉLIORATION DÉTECTÉE (aucune régression) :")
+        for line in improvements:
+            print(line)
+        print("\nPensez à mettre à jour la baseline pour verrouiller ces gains :")
+        print(f"  python3 {__file__} {args.mapnik_xml} --update")
         sys.exit(0)
 
-    print("\nRÉGRESSION DÉTECTÉE :")
-    for line in diffs:
-        print(line)
-    print("\nSi ce changement est intentionnel, mettez à jour la baseline :")
-    print(f"  python3 {__file__} {args.mapnik_xml} --update")
-    sys.exit(1)
+    if regressions:
+        print("\nRÉGRESSION DÉTECTÉE :")
+        for line in regressions:
+            print(line)
+        if improvements:
+            print("\nAméliorations simultanées (non bloquantes) :")
+            for line in improvements:
+                print(line)
+        print("\nSi ce changement est intentionnel, mettez à jour la baseline :")
+        print(f"  python3 {__file__} {args.mapnik_xml} --update")
+        sys.exit(1)
+
+    print("\nAucune régression détectée.")
+    sys.exit(0)
 
 
 if __name__ == '__main__':
