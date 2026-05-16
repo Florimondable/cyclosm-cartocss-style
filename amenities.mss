@@ -90,33 +90,6 @@
     marker-fill: @shop-icon;
     marker-placement: interior;
     marker-clip: false;
-
-    //Pump sub icon
-    [service_bicycle_pump = 'yes'][zoom >= 16],
-    [compressed_air = 'yes'][zoom >= 16] {
-      pump/marker-file: url('symbols/osmandapp/amenity/compressed_air.svg');
-      pump/marker-fill: @bicycle-amenity;
-      pump/marker-placement: interior;
-      pump/marker-clip: false;
-      pump/marker-ignore-placement: true;
-      pump/marker-allow-overlap: true;
-      pump/marker-width: 9;
-      pump/marker-height: 11;
-      pump/marker-geometry-transform: translate(14, 6);
-    }
-
-    //Do it yourself repair tools sub icon
-    [service_bicycle_diy = 'yes'][zoom >= 16] {
-      diy/marker-file: url('symbols/openstreetmap-carto/amenity/bicycle_repair_station.svg');
-      diy/marker-fill: @bicycle-amenity;
-      diy/marker-placement: interior;
-      diy/marker-clip: false;
-      diy/marker-ignore-placement: true;
-      diy/marker-allow-overlap: true;
-      diy/marker-width: 11;
-      diy/marker-height: 11;
-      diy/marker-geometry-transform: translate(-10, 6);
-    }
   }
 
   [feature = 'tourism_alpine_hut'][zoom >= 13],
@@ -229,20 +202,6 @@
     marker-clip: false;
     [access != ''][access != 'permissive'][access != 'yes'] {
       marker-opacity: 0.33;
-    }
-
-    //Pump sub icon
-    [service_bicycle_pump = 'yes'][zoom >= 16],
-    [compressed_air = 'yes'][zoom >= 16] {
-      pump/marker-file: url('symbols/osmandapp/amenity/compressed_air.svg');
-      pump/marker-fill: @bicycle-amenity;
-      pump/marker-placement: interior;
-      pump/marker-clip: false;
-      pump/marker-ignore-placement: true;
-      pump/marker-allow-overlap: true;
-      pump/marker-width: 9;
-      pump/marker-height: 11;
-      pump/marker-geometry-transform: translate(14, 6);
     }
   }
 
@@ -712,33 +671,6 @@
     marker-placement: interior;
     marker-clip: false;
     marker-fill: @bicycle-amenity;
-
-    //Pump sub icon
-    [service_bicycle_pump = 'yes'][zoom >= 16],
-    [compressed_air = 'yes'][zoom >= 16] {
-      pump/marker-file: url('symbols/osmandapp/amenity/compressed_air.svg');
-      pump/marker-fill: @bicycle-amenity;
-      pump/marker-placement: interior;
-      pump/marker-clip: false;
-      pump/marker-ignore-placement: true;
-      pump/marker-allow-overlap: true;
-      pump/marker-width: 9;
-      pump/marker-height: 11;
-      pump/marker-geometry-transform: translate(14, 6);
-    }
-
-    //Do it yourself repair tools sub icon
-    [service_bicycle_diy = 'yes'][zoom >= 16] {
-      diy/marker-file: url('symbols/openstreetmap-carto/amenity/bicycle_repair_station.svg');
-      diy/marker-fill: @bicycle-amenity;
-      diy/marker-placement: interior;
-      diy/marker-clip: false;
-      diy/marker-ignore-placement: true;
-      diy/marker-allow-overlap: true;
-      diy/marker-width: 11;
-      diy/marker-height: 11;
-      diy/marker-geometry-transform: translate(-10, 6);
-    }
   }
 
   [feature = 'shop_sports'][zoom >= 17] {
@@ -746,46 +678,6 @@
     marker-placement: interior;
     marker-clip: false;
     marker-fill: @amenity-common;
-
-    //Pump sub icon
-    [service_bicycle_pump = 'yes'][zoom >= 16],
-    [compressed_air = 'yes'][zoom >= 16] {
-      pump/marker-file: url('symbols/osmandapp/amenity/compressed_air.svg');
-      pump/marker-fill: @bicycle-amenity;
-      pump/marker-placement: interior;
-      pump/marker-clip: false;
-      pump/marker-ignore-placement: true;
-      pump/marker-allow-overlap: true;
-      pump/marker-width: 9;
-      pump/marker-height: 11;
-      pump/marker-geometry-transform: translate(14, 6);
-    }
-
-    //Do it yourself repair tools sub icon
-    [service_bicycle_diy = 'yes'][zoom >= 16] {
-      diy/marker-file: url('symbols/openstreetmap-carto/amenity/bicycle_repair_station.svg');
-      diy/marker-fill: @bicycle-amenity;
-      diy/marker-placement: interior;
-      diy/marker-clip: false;
-      diy/marker-ignore-placement: true;
-      diy/marker-allow-overlap: true;
-      diy/marker-width: 11;
-      diy/marker-height: 11;
-      diy/marker-geometry-transform: translate(-10, 6);
-    }
-
-    //Bicycle retail, repair, rental sub icon
-    [service_bicycle_retail_repair_rental = 'yes'][zoom >= 16] {
-      bicyclererere/marker-file: url('symbols/osm-bright-gl-style/amenities/bicycle_11.svg');
-      bicyclererere/marker-placement: interior;
-      bicyclererere/marker-clip: false;
-      bicyclererere/marker-fill: @bicycle-amenity;
-      bicyclererere/marker-ignore-placement: true;
-      bicyclererere/marker-allow-overlap: true;
-      bicyclererere/marker-width: 11;
-      bicyclererere/marker-height: 11;
-      bicyclererere/marker-geometry-transform: translate(-14, -6);
-    }
   }
 
   [feature = 'amenity_drinking_water'][zoom >= 16],
@@ -826,47 +718,7 @@
     marker-clip: false;
 		marker-fill: @shop-icon;
 		marker-file: url('symbols/openstreetmap-carto/shop/supermarket.svg');
-
-    //Pump sub icon
-    [service_bicycle_pump = 'yes'][zoom >= 16],
-    [compressed_air = 'yes'][zoom >= 16] {
-      pump/marker-file: url('symbols/osmandapp/amenity/compressed_air.svg');
-      pump/marker-fill: @bicycle-amenity;
-      pump/marker-placement: interior;
-      pump/marker-clip: false;
-      pump/marker-ignore-placement: true;
-      pump/marker-allow-overlap: true;
-      pump/marker-width: 9;
-      pump/marker-height: 11;
-      pump/marker-geometry-transform: translate(14, 6);
-    }
-
-    //Do it yourself repair tools sub icon
-    [service_bicycle_diy = 'yes'][zoom >= 16] {
-      diy/marker-file: url('symbols/openstreetmap-carto/amenity/bicycle_repair_station.svg');
-      diy/marker-fill: @bicycle-amenity;
-      diy/marker-placement: interior;
-      diy/marker-clip: false;
-      diy/marker-ignore-placement: true;
-      diy/marker-allow-overlap: true;
-      diy/marker-width: 11;
-      diy/marker-height: 11;
-      diy/marker-geometry-transform: translate(-10, 6);
-    }
-
-    //Bicycle retail, repair, rental sub icon
-    [service_bicycle_retail_repair_rental = 'yes'][feature != 'shop_bicycle'][zoom >= 16] {
-      bicyclererere/marker-file: url('symbols/osm-bright-gl-style/amenities/bicycle_11.svg');
-      bicyclererere/marker-placement: interior;
-      bicyclererere/marker-clip: false;
-      bicyclererere/marker-fill: @bicycle-amenity;
-      bicyclererere/marker-ignore-placement: true;
-      bicyclererere/marker-allow-overlap: true;
-      bicyclererere/marker-width: 11;
-      bicyclererere/marker-height: 11;
-      bicyclererere/marker-geometry-transform: translate(-14, -6);
-    }
-	}
+  }
 
   [feature = 'amenity_bar'][zoom >= 17],
   [feature = 'amenity_biergarten'][zoom >= 17],
@@ -933,33 +785,6 @@
     [feature = 'shop_convenience'][zoom >= 16],
     [feature = 'shop_convenience;gas'][zoom >= 16] {
       marker-file: url('symbols/openstreetmap-carto/shop/convenience.svg');
-
-      //Pump sub icon
-      [service_bicycle_pump = 'yes'][zoom >= 16],
-      [compressed_air = 'yes'][zoom >= 16] {
-        pump/marker-file: url('symbols/osmandapp/amenity/compressed_air.svg');
-        pump/marker-fill: @bicycle-amenity;
-        pump/marker-placement: interior;
-        pump/marker-clip: false;
-        pump/marker-ignore-placement: true;
-        pump/marker-allow-overlap: true;
-        pump/marker-width: 9;
-        pump/marker-height: 11;
-        pump/marker-geometry-transform: translate(14, 6);
-      }
-
-      //Do it yourself repair tools sub icon
-      [service_bicycle_diy = 'yes'][zoom >= 16] {
-        diy/marker-file: url('symbols/openstreetmap-carto/amenity/bicycle_repair_station.svg');
-        diy/marker-fill: @bicycle-amenity;
-        diy/marker-placement: interior;
-        diy/marker-clip: false;
-        diy/marker-ignore-placement: true;
-        diy/marker-allow-overlap: true;
-        diy/marker-width: 11;
-        diy/marker-height: 11;
-        diy/marker-geometry-transform: translate(-10, 6);
-      }
     }
     [feature = 'shop_greengrocer'][zoom >= 16] {
       marker-file: url('symbols/openstreetmap-carto/shop/greengrocer.svg');
@@ -984,33 +809,6 @@
     marker-fill: @bicycle-rental;
     marker-placement: interior;
     marker-clip: false;
-
-    //Pump sub icon
-    [service_bicycle_pump = 'yes'][zoom >= 16],
-    [compressed_air = 'yes'][zoom >= 16] {
-      pump/marker-file: url('symbols/osmandapp/amenity/compressed_air.svg');
-      pump/marker-fill: @bicycle-amenity;
-      pump/marker-placement: interior;
-      pump/marker-clip: false;
-      pump/marker-ignore-placement: true;
-      pump/marker-allow-overlap: true;
-      pump/marker-width: 9;
-      pump/marker-height: 11;
-      pump/marker-geometry-transform: translate(14, 6);
-    }
-
-    //Do it yourself repair tools sub icon
-    [service_bicycle_diy = 'yes'][zoom >= 16] {
-      diy/marker-file: url('symbols/openstreetmap-carto/amenity/bicycle_repair_station.svg');
-      diy/marker-fill: @bicycle-amenity;
-      diy/marker-placement: interior;
-      diy/marker-clip: false;
-      diy/marker-ignore-placement: true;
-      diy/marker-allow-overlap: true;
-      diy/marker-width: 11;
-      diy/marker-height: 11;
-      diy/marker-geometry-transform: translate(-10, 6);
-    }
   }
 
   [feature = 'highway_elevator'][zoom >= 18] {
@@ -1065,32 +863,6 @@
       marker-opacity: 0.33;
     }
 
-    //Pump sub icon
-    [service_bicycle_pump = 'yes'][zoom >= 16],
-    [compressed_air = 'yes'][zoom >= 16] {
-      pump/marker-file: url('symbols/osmandapp/amenity/compressed_air.svg');
-      pump/marker-fill: @bicycle-amenity;
-      pump/marker-placement: interior;
-      pump/marker-clip: false;
-      pump/marker-ignore-placement: true;
-      pump/marker-allow-overlap: true;
-      pump/marker-width: 9;
-      pump/marker-height: 11;
-      pump/marker-geometry-transform: translate(14, 6);
-    }
-
-    //Do it yourself repair tools sub icon
-    [service_bicycle_diy = 'yes'][zoom >= 16] {
-      diy/marker-file: url('symbols/openstreetmap-carto/amenity/bicycle_repair_station.svg');
-      diy/marker-fill: @bicycle-amenity;
-      diy/marker-placement: interior;
-      diy/marker-clip: false;
-      diy/marker-ignore-placement: true;
-      diy/marker-allow-overlap: true;
-      diy/marker-width: 11;
-      diy/marker-height: 11;
-      diy/marker-geometry-transform: translate(-10, 6);
-    }
   }
 
   [feature = 'amenity_motorcycle_parking'][zoom >= 16] {
@@ -1222,6 +994,70 @@
       marker-fill: #bb2528;
       marker-clip: false;
     }
+
+  // Pump sub-icon — consolidated for all parent features
+  [feature = 'amenity_fuel'][zoom >= 17],
+  [feature = 'shop_gas'][zoom >= 17],
+  [feature = 'shop_sports'][zoom >= 17],
+  [feature = 'shop_convenience'][zoom >= 17],
+  [feature = 'shop_convenience;gas'][zoom >= 17],
+  [feature = 'amenity_bicycle_repair_station'][zoom >= 16],
+  [feature = 'shop_bicycle'][zoom >= 16],
+  [feature = 'shop_supermarket'][zoom >= 16],
+  [feature = 'amenity_bicycle_rental'][zoom >= 16],
+  [feature = 'amenity_bicycle_parking'][zoom >= 16] {
+    [service_bicycle_pump = 'yes'],
+    [compressed_air = 'yes'] {
+      pump/marker-file: url('symbols/osmandapp/amenity/compressed_air.svg');
+      pump/marker-fill: @bicycle-amenity;
+      pump/marker-placement: interior;
+      pump/marker-clip: false;
+      pump/marker-ignore-placement: true;
+      pump/marker-allow-overlap: true;
+      pump/marker-width: 9;
+      pump/marker-height: 11;
+      pump/marker-geometry-transform: translate(14, 6);
+    }
+  }
+
+  // DIY sub-icon — consolidated (all pump parents except amenity_bicycle_repair_station)
+  [feature = 'amenity_fuel'][zoom >= 17],
+  [feature = 'shop_gas'][zoom >= 17],
+  [feature = 'shop_sports'][zoom >= 17],
+  [feature = 'shop_convenience'][zoom >= 17],
+  [feature = 'shop_convenience;gas'][zoom >= 17],
+  [feature = 'shop_bicycle'][zoom >= 16],
+  [feature = 'shop_supermarket'][zoom >= 16],
+  [feature = 'amenity_bicycle_rental'][zoom >= 16],
+  [feature = 'amenity_bicycle_parking'][zoom >= 16] {
+    [service_bicycle_diy = 'yes'] {
+      diy/marker-file: url('symbols/openstreetmap-carto/amenity/bicycle_repair_station.svg');
+      diy/marker-fill: @bicycle-amenity;
+      diy/marker-placement: interior;
+      diy/marker-clip: false;
+      diy/marker-ignore-placement: true;
+      diy/marker-allow-overlap: true;
+      diy/marker-width: 11;
+      diy/marker-height: 11;
+      diy/marker-geometry-transform: translate(-10, 6);
+    }
+  }
+
+  // Retail sub-icon — shop_sports and shop_supermarket
+  [feature = 'shop_sports'][zoom >= 17],
+  [feature = 'shop_supermarket'][zoom >= 16] {
+    [service_bicycle_retail_repair_rental = 'yes'] {
+      bicyclererere/marker-file: url('symbols/osm-bright-gl-style/amenities/bicycle_11.svg');
+      bicyclererere/marker-placement: interior;
+      bicyclererere/marker-clip: false;
+      bicyclererere/marker-fill: @bicycle-amenity;
+      bicyclererere/marker-ignore-placement: true;
+      bicyclererere/marker-allow-overlap: true;
+      bicyclererere/marker-width: 11;
+      bicyclererere/marker-height: 11;
+      bicyclererere/marker-geometry-transform: translate(-14, -6);
+    }
+  }
 }
 
 #amenities-points,
