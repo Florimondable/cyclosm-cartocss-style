@@ -295,6 +295,7 @@ Layer:
         WHERE
           waterway IN ('river', 'canal', 'stream')
           AND (tunnel IS NULL OR tunnel NOT IN ('yes', 'culvert'))
+          AND way && !bbox!
       ) AS data
   geometry: linestring
   properties:
@@ -311,6 +312,7 @@ Layer:
         WHERE
           waterway IN ('river', 'canal', 'stream', 'ditch', 'drain')
           AND (tunnel IS NULL OR tunnel NOT IN ('yes', 'culvert'))
+          AND way && !bbox!
       ) AS data
   geometry: linestring
   properties:
@@ -337,9 +339,11 @@ Layer:
           )
           AND way_area > 0.1*!pixel_width!::real*!pixel_height!::real
           AND (tunnel IS NULL OR tunnel NOT IN ('yes', 'culvert'))
+          AND way && !bbox!
       ) AS data
   geometry: polygon
   properties:
+    cache-features: true
     minzoom: 2
     maxzoom: 9
 - id: water_gen1
@@ -364,9 +368,11 @@ Layer:
           )
           AND way_area > 1*!pixel_width!::real*!pixel_height!::real
           AND (tunnel IS NULL OR tunnel NOT IN ('yes', 'culvert'))
+          AND way && !bbox!
       ) AS data
   geometry: polygon
   properties:
+    cache-features: true
     minzoom: 10
     maxzoom: 12
 - id: water
@@ -390,6 +396,7 @@ Layer:
             OR landuse in ('basin', 'reservoir')
           )
           AND (tunnel IS NULL OR tunnel NOT IN ('yes', 'culvert'))
+          AND way && !bbox!
       ) AS data
   geometry: polygon
   properties:
@@ -425,6 +432,7 @@ Layer:
           way, man_made
         FROM planet_osm_polygon
         WHERE man_made IN ('pier', 'breakwater', 'groyne')
+          AND way && !bbox!
       ) AS piers_poly
   properties:
     minzoom: 12
@@ -438,6 +446,7 @@ Layer:
           way, man_made
         FROM planet_osm_line
         WHERE man_made IN ('pier', 'breakwater', 'groyne')
+          AND way && !bbox!
       ) AS piers_line
   properties:
     minzoom: 12
@@ -450,6 +459,7 @@ Layer:
         SELECT way, aeroway AS type
         FROM planet_osm_line
         WHERE aeroway IN ('runway', 'taxiway')
+          AND way && !bbox!
       ) AS data
   geometry: linestring
   properties:
@@ -498,6 +508,7 @@ Layer:
         SELECT way
         FROM planet_osm_point
         WHERE highway = 'turning_circle'
+          AND way && !bbox!
       ) AS data
   geometry: point
   properties:
@@ -513,6 +524,7 @@ Layer:
           sport
         FROM planet_osm_line
         WHERE leisure = 'track'
+          AND way && !bbox!
       ) AS data
   geometry: linestring
   properties:
@@ -589,6 +601,7 @@ Layer:
       ) AS data
   geometry: linestring
   properties:
+    cache-features: true
     minzoom: 9
     maxzoom: 10
 - id: roads_low
@@ -632,6 +645,7 @@ Layer:
         SELECT way
         FROM planet_osm_point
         WHERE highway = 'turning_circle'
+          AND way && !bbox!
       ) AS data
   geometry: point
   properties:
@@ -654,6 +668,7 @@ Layer:
           END AS bicycle
         FROM planet_osm_line
         WHERE aerialway IS NOT NULL
+          AND way && !bbox!
       ) AS data
   properties:
     minzoom: 12
@@ -757,6 +772,7 @@ Layer:
         FROM planet_osm_line
         WHERE route = 'ferry'
           AND osm_id > 0
+          AND way && !bbox!
       ) AS ferry_routes
   properties:
     minzoom: 8
@@ -889,6 +905,7 @@ Layer:
           way
         FROM planet_osm_line
         WHERE power = 'minor_line'
+          AND way && !bbox!
       ) AS power_minorline
   properties:
     minzoom: 16
@@ -901,8 +918,9 @@ Layer:
       (SELECT
           way
         FROM planet_osm_line
-        WHERE power = 'line'
-          OR (power = 'cable' AND tags->'location' IN ('overground', 'overhead', 'surface', 'outdoor', 'platform'))
+        WHERE (power = 'line'
+          OR (power = 'cable' AND tags->'location' IN ('overground', 'overhead', 'surface', 'outdoor', 'platform')))
+          AND way && !bbox!
       ) AS power_line
   properties:
     minzoom: 14
@@ -924,6 +942,7 @@ Layer:
                 OR (boundary = 'protected_area' AND tags->'protect_class' IN ('1','1a','1b','2','3','4','5','6','7','24','97','98','99')))
           AND building IS NULL
           AND way_area > 1*!pixel_width!::real*!pixel_height!::real
+          AND way && !bbox!
       ) AS protected_areas
   properties:
     cache-features: true
@@ -1200,6 +1219,7 @@ Layer:
         WHERE route = 'ferry'
           AND osm_id > 0
           AND name IS NOT NULL
+          AND way && !bbox!
       ) AS ferry_routes_text
   properties:
     minzoom: 13
@@ -1549,6 +1569,7 @@ Layer:
         SELECT barrier, way, z_order
         FROM planet_osm_point
         WHERE barrier IN ('block', 'bollard', 'cattle_grid', 'chain', 'cycle_barrier', 'gate', 'jersey_barrier', 'kissing_gate', 'lift_gate', 'log', 'motorcycle_barrier', 'planter', 'stile', 'swing_gate', 'turnstile')
+          AND way && !bbox!
         ORDER BY z_order NULLS LAST
       ) AS data
   geometry: point
