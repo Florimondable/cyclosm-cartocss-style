@@ -129,6 +129,7 @@ Layer:
           OR highway IN ('pedestrian')
         )
         AND way_area > 1*!pixel_width!::real*!pixel_height!::real
+        AND way && !bbox!
         ORDER BY way_area DESC
       ) AS data
   geometry: polygon
@@ -155,12 +156,13 @@ Layer:
           ) AS type,
           sport
         FROM planet_osm_polygon
-        WHERE landuse IN ('allotments', 'brownfield', 'cemetery', 'commercial', 'construction', 'forest', 'grass', 'greenhouse_horticulture', 'industrial', 'landfill', 'meadow', 'farmland', 'vineyard', 'orchard', 'plant_nursery', 'quarry', 'religious', 'residential', 'retail', 'village_green')
+        WHERE (landuse IN ('allotments', 'brownfield', 'cemetery', 'commercial', 'construction', 'forest', 'grass', 'greenhouse_horticulture', 'industrial', 'landfill', 'meadow', 'farmland', 'vineyard', 'orchard', 'plant_nursery', 'quarry', 'religious', 'residential', 'retail', 'village_green')
           OR leisure IN ('common', 'garden', 'golf_course', 'park', 'pitch', 'sports_centre', 'stadium', 'track')
           OR "natural" IN ('grassland', 'glacier', 'heath', 'scrub', 'wood', 'wetland', 'sand', 'beach', 'dune', 'bare_rock', 'shingle', 'scree')
           OR highway IN ('pedestrian', 'footway')
           OR amenity IN ('college', 'grave_yard', 'hospital', 'parking', 'school', 'university')
-          OR man_made IN ('works', 'wastewater_plant', 'water_works')
+          OR man_made IN ('works', 'wastewater_plant', 'water_works'))
+          AND way && !bbox!
         ORDER BY way_area DESC
       ) AS data
   geometry: polygon
@@ -182,6 +184,7 @@ Layer:
           ("natural" = 'wood' OR landuse = 'forest')
           AND building IS NULL
           AND way_area > 1*!pixel_width!::real*!pixel_height!::real
+          AND way && !bbox!
         ORDER BY way_area DESC
       ) AS data
   geometry: polygon
@@ -417,10 +420,12 @@ Layer:
             OR (waterway='dam'))
           AND way_area > 1*!pixel_width!::real*!pixel_height!::real
           AND (tags->'location' IS NULL OR tags->'location' != 'underground')
+          AND way && !bbox!
         ORDER BY z_order ASC, way_area DESC
       ) AS data
   geometry: polygon
   properties:
+    cache-features: true
     minzoom: 16
 - id: piers-poly
   geometry: polygon
@@ -1216,7 +1221,8 @@ Layer:
       (
         SELECT way, "natural", man_made
         FROM planet_osm_line
-        WHERE "natural" = 'cliff' OR man_made = 'embankment'
+        WHERE ("natural" = 'cliff' OR man_made = 'embankment')
+          AND way && !bbox!
       ) AS data
   geometry: linestring
   properties:
@@ -1255,6 +1261,7 @@ Layer:
           AND admin_level IN ('1', '2', '3', '4', '5', '6', '7', '8', '9')
           AND name IS NOT NULL
           AND osm_id < 0
+          AND way && !bbox!
         ORDER BY admin_level::integer ASC, way_area DESC
       ) AS admin_text
   properties:
@@ -1276,6 +1283,7 @@ Layer:
                OR leisure = 'nature_reserve'
                OR (boundary = 'protected_area' AND tags->'protect_class' IN ('1','1a','1b','2','3','4','5','6','7','24','97','98','99')))
           AND name IS NOT NULL
+          AND way && !bbox!
       ) AS protected_areas_text
   properties:
     minzoom: 13
@@ -1290,6 +1298,7 @@ Layer:
         WHERE (route = 'bicycle' OR route = 'mtb')
           AND (ref IS NOT NULL OR name IS NOT NULL)
           AND (NOT ((tags->'network') IS NOT NULL AND (tags->'network:type') IS NOT NULL AND (tags->'network' = 'rcn') AND tags->'network:type' = 'node_network'))
+          AND way && !bbox!
       ) AS data
   geometry: linestring
   properties:
@@ -1573,7 +1582,8 @@ Layer:
         WHERE
           waterway IN ('canal', 'river', 'stream')
           AND name IS NOT NULL
-            AND (tunnel IS NULL OR tunnel = 'no')
+          AND (tunnel IS NULL OR tunnel = 'no')
+          AND way && !bbox!
       ) AS data
   geometry: linestring
   properties:
@@ -1610,6 +1620,7 @@ Layer:
           information,
           way_area/NULLIF(!pixel_width!::real*!pixel_height!::real,0) AS way_pixels
         FROM cyclosm_amenities_poly
+        WHERE way && !bbox!
       ) AS data
   geometry: polygon
   properties:
@@ -1650,6 +1661,7 @@ Layer:
           power
       FROM planet_osm_point
       WHERE power IN ('tower', 'pole')
+        AND way && !bbox!
       ORDER BY
         CASE
           WHEN power = 'tower' THEN 1
@@ -1861,6 +1873,7 @@ Layer:
           END AS oneway_bicycle
         FROM planet_osm_line
         WHERE highway IN ('bridleway', 'footway', 'cycleway', 'path', 'track', 'steps')
+          AND way && !bbox!
       ) AS data
   properties:
     minzoom: 15
@@ -1889,7 +1902,7 @@ Layer:
               )
           ) AS conditional
         FROM planet_osm_line
-        WHERE (
+        WHERE ((
           highway IS NOT NULL AND (
             tags->'motor_vehicle:conditional' IS NOT NULL
             OR tags->'vehicle:conditional' IS NOT NULL
@@ -1900,7 +1913,8 @@ Layer:
         ) OR (
           highway IN ('path', 'cycleway', 'track')
           AND tags->'maxspeed'~E'^\\d+$'
-        )
+        ))
+          AND way && !bbox!
       ) AS data
   properties:
     minzoom: 20
@@ -1958,6 +1972,7 @@ Layer:
           (landuse = 'military' OR military = 'danger_area')
           AND building IS NULL
           AND way_area > 1*!pixel_width!::real*!pixel_height!::real
+          AND way && !bbox!
         ORDER BY way_area DESC
       ) AS data
   geometry: polygon
