@@ -494,6 +494,7 @@ Layer:
             tunnel
         FROM cyclosm_ways
         WHERE tunnel NOT IN ('no')
+          AND way && !bbox!
       ) AS data
   geometry: linestring
   properties:
@@ -560,6 +561,7 @@ Layer:
         FROM cyclosm_ways
         WHERE (tunnel IS NULL OR tunnel = 'no')
           AND (bridge IS NULL OR bridge = 'no')
+          AND way && !bbox!
       ) AS data
   geometry: linestring
   properties:
@@ -702,6 +704,7 @@ Layer:
             bridge
         FROM cyclosm_ways
         WHERE bridge NOT IN ('no')
+          AND way && !bbox!
       ) AS data
   geometry: linestring
   properties:
@@ -720,6 +723,7 @@ Layer:
         WHERE boundary = 'administrative'
           AND admin_level IN ('0', '1', '2', '3', '4')
           AND osm_id < 0
+          AND way && !bbox!
         ORDER BY admin_level DESC
       ) AS admin_low_zoom
   properties:
@@ -738,6 +742,7 @@ Layer:
         WHERE boundary = 'administrative'
           AND admin_level IN ('0', '1', '2', '3', '4', '5', '6', '7', '8')
           AND osm_id < 0
+          AND way && !bbox!
         ORDER BY admin_level DESC
       ) AS admin_mid_zoom
   properties:
@@ -756,6 +761,7 @@ Layer:
         WHERE boundary = 'administrative'
           AND admin_level IN ('0', '1', '2', '3', '4', '5', '6', '7', '8', '9')
           AND osm_id < 0
+          AND way && !bbox!
         ORDER BY admin_level::integer DESC -- With 10 as a valid value, we need to do a numeric ordering, not a text ordering
       ) AS admin_high_zoom
   properties:
@@ -855,11 +861,13 @@ Layer:
             END as priority
           FROM planet_osm_line
           WHERE route='bicycle'
+            AND way && !bbox!
           UNION ALL
           SELECT way, 'lcn' as type, tags->'lcn' AS state, 4 as priority
           FROM planet_osm_line
           WHERE tags->'lcn' IS NOT NULL AND tags->'lcn' NOT IN ('no', 'none')
             AND highway IS NOT NULL
+            AND way && !bbox!
         ) as routes_from_relations_and_ways
         ORDER BY priority DESC
       ) AS data
@@ -875,6 +883,7 @@ Layer:
         SELECT way, route, COALESCE(tags->'network', 'lcn') AS type, tags->'state' AS state
         FROM planet_osm_line
         WHERE route='mtb'
+          AND way && !bbox!
         ORDER BY CASE
           WHEN tags->'network' = 'icn' THEN 0
           WHEN tags->'network' = 'ncn' THEN 1
@@ -958,12 +967,14 @@ Layer:
           "natural"
         FROM planet_osm_point
         WHERE "natural" = 'tree'
+          AND way && !bbox!
         UNION ALL
         SELECT
           way,
           "natural"
         FROM planet_osm_line
         WHERE "natural" = 'tree_row'
+          AND way && !bbox!
       ) AS data
   properties:
     cache-features: true
@@ -1025,11 +1036,12 @@ Layer:
             WHEN (tags->'lcn_ref') IS NOT NULL THEN 'lcn'
           END AS network
         FROM planet_osm_point
-        WHERE
+        WHERE (
           (tags->'icn_ref') IS NOT NULL OR
           (tags->'ncn_ref') IS NOT NULL OR
           (tags->'rcn_ref') IS NOT NULL OR
           (tags->'lcn_ref') IS NOT NULL
+        ) AND way && !bbox!
         ORDER BY z_order NULLS LAST
       ) AS data
   geometry: point
@@ -1051,6 +1063,7 @@ Layer:
           AND admin_level = '2'
           AND name IS NOT NULL
           AND way_area > 100*!pixel_width!::real*!pixel_height!::real
+          AND way && !bbox!
         ORDER BY way_area DESC
       ) AS data
   properties:
@@ -1073,6 +1086,7 @@ Layer:
         WHERE place IN ('city', 'town', 'village', 'hamlet')
           AND name IS NOT NULL
           AND capital='yes'
+          AND way && !bbox!
         ORDER BY population DESC
       ) AS data
   properties:
@@ -1095,6 +1109,7 @@ Layer:
           AND admin_level = '4'
           AND name IS NOT NULL
           AND way_area > 100*!pixel_width!::real*!pixel_height!::real
+          AND way && !bbox!
         ORDER BY way_area DESC
       ) AS data
   properties:
@@ -1138,6 +1153,7 @@ Layer:
             WHERE place IN ('city', 'town')
               AND name IS NOT NULL
               AND NOT (capital IS NOT NULL AND capital='yes')
+              AND way && !bbox!
           ) as p
         ORDER BY score DESC, length(name) DESC, name
       ) AS data
@@ -1423,6 +1439,7 @@ Layer:
           height,
           way_area/NULLIF(!pixel_width!::real*!pixel_height!::real,0) AS way_pixels
         FROM cyclosm_amenities_poly
+        WHERE way && !bbox!
       ) AS data
   geometry: polygon
   properties:
@@ -1449,7 +1466,8 @@ Layer:
           ) AS feature
         FROM planet_osm_line
         -- The upcoming where clause is needed for performance only, as the CASE statements would end up doing the equivalent filtering
-        WHERE tags @> 'ford=>yes' OR tags @> 'ford=>stepping_stones'
+        WHERE (tags @> 'ford=>yes' OR tags @> 'ford=>stepping_stones')
+          AND way && !bbox!
         ORDER BY CASE WHEN layer~E'^\\d+$' THEN layer::integer ELSE 0 END
       ) AS data
   geometry: linestring
