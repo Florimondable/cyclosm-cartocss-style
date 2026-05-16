@@ -514,7 +514,7 @@ Layer:
   properties:
     cache-features: true
     minzoom: 11
-- id: turning_circle_case
+- id: turning_circle
   <<: *extents
   Datasource:
     <<: *osm2pgsql
@@ -528,6 +528,7 @@ Layer:
   geometry: point
   properties:
     buffer-size: 64
+    cache-features: true
     minzoom: 14
 - id: leisure_track
   <<: *extents
@@ -653,21 +654,6 @@ Layer:
     cache-features: true
     minzoom: 5
     maxzoom: 8
-- id: turning_circle_fill
-  <<: *extents
-  Datasource:
-    <<: *osm2pgsql
-    table: |-
-      (
-        SELECT way
-        FROM planet_osm_point
-        WHERE highway = 'turning_circle'
-          AND way && !bbox!
-      ) AS data
-  geometry: point
-  properties:
-    buffer-size: 64
-    minzoom: 14
 - id: aerialways
   geometry: linestring
   <<: *extents

@@ -3820,29 +3820,33 @@
 
 
 // ---- Turning Circles ---------------------------------------------
-#turning_circle_case[zoom>=14] {
-  marker-fill: @standard-fill;
-  marker-line-color: @standard-case;
-  marker-line-width: 2*@rdz14_residential_outline;
-  [zoom>=15] { marker-line-width: 2*@rdz15_residential_outline; }
-  [zoom>=16] { marker-line-width: 2*@rdz16_residential_outline; }
-  [zoom>=17] { marker-line-width: 2*@rdz17_residential_outline; }
-  [zoom>=18] { marker-line-width: 2*@rdz18_residential_outline; }
-  marker-allow-overlap: true;
-}
-#turning_circle_fill[zoom>=14] {
-  marker-fill: @standard-fill;
-  marker-line-width: 0;
-  marker-line-opacity: 0;
-  marker-allow-overlap: true;
-}
-#turning_circle_case[zoom>=14],
-#turning_circle_fill[zoom>=14] {
-  marker-width: @rdz14_turning_circle_marker;
-  [zoom>=15]  { marker-width: @rdz15_turning_circle_marker; }
-  [zoom>=16]  { marker-width: @rdz16_turning_circle_marker; }
-  [zoom>=17]  { marker-width: @rdz17_turning_circle_marker; }
-  [zoom>=18] { marker-width: @rdz18_turning_circle_marker; }
+#turning_circle[zoom>=14] {
+  ::case {
+    marker-fill: @standard-fill;
+    marker-line-color: @standard-case;
+    marker-line-width: 2*@rdz14_residential_outline;
+    [zoom>=15] { marker-line-width: 2*@rdz15_residential_outline; }
+    [zoom>=16] { marker-line-width: 2*@rdz16_residential_outline; }
+    [zoom>=17] { marker-line-width: 2*@rdz17_residential_outline; }
+    [zoom>=18] { marker-line-width: 2*@rdz18_residential_outline; }
+    marker-allow-overlap: true;
+    marker-width: @rdz14_turning_circle_marker;
+    [zoom>=15] { marker-width: @rdz15_turning_circle_marker; }
+    [zoom>=16] { marker-width: @rdz16_turning_circle_marker; }
+    [zoom>=17] { marker-width: @rdz17_turning_circle_marker; }
+    [zoom>=18] { marker-width: @rdz18_turning_circle_marker; }
+  }
+  ::fill {
+    marker-fill: @standard-fill;
+    marker-line-width: 0;
+    marker-line-opacity: 0;
+    marker-allow-overlap: true;
+    marker-width: @rdz14_turning_circle_marker;
+    [zoom>=15] { marker-width: @rdz15_turning_circle_marker; }
+    [zoom>=16] { marker-width: @rdz16_turning_circle_marker; }
+    [zoom>=17] { marker-width: @rdz17_turning_circle_marker; }
+    [zoom>=18] { marker-width: @rdz18_turning_circle_marker; }
+  }
 }
 
 // ==================================================================
