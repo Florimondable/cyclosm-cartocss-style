@@ -34,3 +34,13 @@ jobs:
         with:
           name: rendering-complexity
           path: perf_results.json
+      - name: Non-regression test
+        run: |
+          python3 scripts/test_non_regression.py mapnik.xml \
+            --baseline scripts/perf_baseline.json
+      - name: Upload baseline
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: perf-baseline
+          path: scripts/perf_baseline.json
