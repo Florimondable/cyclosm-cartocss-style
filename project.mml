@@ -732,6 +732,7 @@ Layer:
         ORDER BY admin_level DESC
       ) AS admin_low_zoom
   properties:
+    cache-features: true
     minzoom: 4
     maxzoom: 10
 - id: admin-mid-zoom
@@ -751,6 +752,7 @@ Layer:
         ORDER BY admin_level DESC
       ) AS admin_mid_zoom
   properties:
+    cache-features: true
     minzoom: 11
     maxzoom: 12
 - id: admin-high-zoom
@@ -770,6 +772,7 @@ Layer:
         ORDER BY admin_level::integer DESC -- With 10 as a valid value, we need to do a numeric ordering, not a text ordering
       ) AS admin_high_zoom
   properties:
+    cache-features: true
     minzoom: 13
 - id: ferry-routes
   geometry: linestring
@@ -786,6 +789,7 @@ Layer:
           AND way && !bbox!
       ) AS ferry_routes
   properties:
+    cache-features: true
     minzoom: 8
 - id: bicycle_routes_gen0
   <<: *extents
