@@ -285,6 +285,7 @@ Layer:
       ) AS data
   geometry: linestring
   properties:
+    buffer-size: 32
     minzoom: 8
     maxzoom: 12
 - id: waterway_med
@@ -302,6 +303,7 @@ Layer:
       ) AS data
   geometry: linestring
   properties:
+    buffer-size: 32
     minzoom: 13
     maxzoom: 14
 - id: waterway_high
@@ -319,6 +321,7 @@ Layer:
       ) AS data
   geometry: linestring
   properties:
+    buffer-size: 32
     minzoom: 15
 - id: water_gen0
   <<: *extents
@@ -454,6 +457,7 @@ Layer:
           AND way && !bbox!
       ) AS piers_line
   properties:
+    buffer-size: 32
     minzoom: 12
 - id: aeroway
   <<: *extents
@@ -468,6 +472,7 @@ Layer:
       ) AS data
   geometry: linestring
   properties:
+    buffer-size: 32
     minzoom: 11
 - id: tunnel
   <<: *extents
@@ -791,6 +796,7 @@ Layer:
           AND way && !bbox!
       ) AS ferry_routes
   properties:
+    buffer-size: 32
     cache-features: true
     minzoom: 8
 - id: bicycle_routes_gen0
@@ -808,6 +814,7 @@ Layer:
       ) AS data
   geometry: linestring
   properties:
+    buffer-size: 32
     minzoom: 2
     maxzoom: 4
 - id: bicycle_routes_gen1
@@ -828,6 +835,7 @@ Layer:
       ) AS data
   geometry: linestring
   properties:
+    buffer-size: 32
     minzoom: 5
     maxzoom: 7
 - id: bicycle_routes_gen2
@@ -850,6 +858,7 @@ Layer:
       ) AS data
   geometry: linestring
   properties:
+    buffer-size: 32
     minzoom: 8
     maxzoom: 10
 - id: bicycle_routes_bicycle_gen3
@@ -884,6 +893,7 @@ Layer:
       ) AS data
   geometry: linestring
   properties:
+    buffer-size: 32
     minzoom: 11
 - id: bicycle_routes_mtb_gen3
   <<: *extents
@@ -905,6 +915,7 @@ Layer:
       ) AS data
   geometry: linestring
   properties:
+    buffer-size: 32
     minzoom: 11
 - id: route
   <<: *extents84
@@ -928,6 +939,7 @@ Layer:
           AND way && !bbox!
       ) AS power_minorline
   properties:
+    buffer-size: 32
     minzoom: 16
 - id: power-line
   geometry: linestring
@@ -943,6 +955,7 @@ Layer:
           AND way && !bbox!
       ) AS power_line
   properties:
+    buffer-size: 32
     minzoom: 14
 - id: protected-areas
   geometry: polygon
@@ -1027,6 +1040,7 @@ Layer:
         ) AS features
       ) AS line_barriers
   properties:
+    buffer-size: 32
     minzoom: 15
 - id: cycle-junction-nodes
   <<: *extents
